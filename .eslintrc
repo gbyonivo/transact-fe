@@ -1,0 +1,32 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 2015,
+        "sourceType": "module",
+        "ecmaFeatures": {
+        "jsx": true,
+        "experimentalObjectRestSpread": true
+        }
+    },
+    "env": {
+        "node": true
+    },
+    "plugins": [
+        "css-modules",
+        "react"
+    ],
+    "extends": [
+        "airbnb-base",
+        "plugin:css-modules/recommended"
+    ],
+    "rules": {
+        "comma-dangle": "off",
+        "eol-last": "off",
+        "indent": [2, 2],
+        "no-confusing-arrow": "off",
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        "react/jsx-no-undef": "error",
+        "react/prop-types": "error",
+        "max-len": [2, 150]
+    }
+}
