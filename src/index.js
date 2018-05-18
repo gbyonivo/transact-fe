@@ -7,7 +7,9 @@ import { HttpLink } from 'apollo-link-http';
 import { ApolloLink } from 'apollo-link';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
-import Test from './components';
+import AccountListMenu from './components/accountListMenu';
+import Summary from './components/summary';
+import './index.scss';
 
 const middlewareAuthLink = new ApolloLink((operation, forward) => {
   // const token = localStorage.getItem(AUTH_TOKEN)
@@ -35,9 +37,8 @@ const client = new ApolloClient({
 ReactDOM.render(<ApolloProvider client={client}>
   <Router>
     <div>
-      <Route path="/" component={Test} />
-      <Route path="/hire" component={Test} />
-      <Route path="/test" component={Test} />
+      <Route path="/" component={AccountListMenu} />
+      <Route path="/" component={Summary} />
     </div>
   </Router>
 </ApolloProvider>, document.getElementById('index')); // eslint-disable-line

@@ -1,0 +1,23 @@
+.accountListMenu {
+  position: fixed;
+  width: 300px;
+  top: 0;
+  height: 100%;
+  left: 0;
+  background: #efefef;
+  background: radial-gradient(#393939, #2b2a2a);
+  color: #d2c7c7;
+  .accountListMenuHeader{
+    margin: 0;
+    padding: 5px;
+    background: #383838;
+    font-weight: 500;
+  }
+  .accountList{
+    list-style-type: none;
+    margin: 0;
+    padding: 5px 15px;
+    overflow: auto;
+    height: calc(100% - 34px);
+  }
+}

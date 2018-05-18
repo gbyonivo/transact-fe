@@ -2,7 +2,8 @@ import gql from 'graphql-tag';
 
 const ACCOUNTS_QUERY = gql`query AccountQuery {
   getAccounts {
-   name
+   name,
+   _id
   }
 }`;
 

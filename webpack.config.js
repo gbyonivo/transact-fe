@@ -17,7 +17,7 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/,
+        test: /\.scss$/,
         use: [
           { loader: 'style-loader' },
           {
@@ -29,6 +29,9 @@ module.exports = {
               sourceMap: true,
               minimize: true
             }
+          },
+          {
+            loader: 'sass-loader'
           }
         ]
       }

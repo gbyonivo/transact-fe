@@ -23,6 +23,7 @@
         "eol-last": "off",
         "indent": [2, 2],
         "no-confusing-arrow": "off",
+        "no-underscore-dangle": "off",
         "react/jsx-uses-react": "error",
         "react/jsx-uses-vars": "error",
         "react/jsx-no-undef": "error",
