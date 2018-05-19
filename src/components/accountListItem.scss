@@ -1,13 +1,18 @@
 .accountListItem{
-  margin: 3px 0px;
+  margin: 3px 0;
+  padding-bottom: 5px;
+  border-bottom: solid 0.5px #15997e;
   a{
     color: inherit;
     font-size: 14px;
     cursor: pointer;
     text-decoration: none;
+    .accountListItemName{
+      width: 100%;
+      position: relative;
+    }
     &:hover{
-      color: #a31800;
-      font-weight: bold;
+      color: #c5c5c5;
     }
   }
 }

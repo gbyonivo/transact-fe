@@ -3,11 +3,10 @@
   left: 300px;
   position: fixed;
   height: 100%;
-  background: #efefef;
   top: 0;
   .header{
     text-align: center;
-    color: #2d2d2d;
+    color: #10705d;
   }
   .summaryList{
     list-style-type: none;
@@ -15,13 +14,14 @@
     height: 0;
     text-align: center;
     .summaryItem{
-      width: 48%;
-      margin: 4px 4px;
+      width: 46%;
+      margin: 4px;
       height: 200px;
       float: left;
-      background: radial-gradient(#efefef, #ccc);
-      box-shadow: #2d2d2d 1px 1px 1px;
-      border-radius: 5px;
+      background: #FAFAFA;
+      color: #10705d;
+      /* border: solid 0.5px #E0E0E0; */
+      box-shadow: 0.5px 0.5px 0.5px #E0E0E0;
       .summaryItemHeader{
         font-weight: bolder;
         padding: 10px 0;

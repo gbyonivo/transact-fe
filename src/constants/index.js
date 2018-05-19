@@ -6,4 +6,8 @@ export const SUMMARY_HEADERS = {
   loss: 'Money Lost or Pardoned'
 };
 
-export const ACCOUNT_TYPES = {};
+export const ACCOUNT_TYPES = {
+  PROFIT: 'PROFIT',
+  BORROWER: 'BORROWER',
+  LENDER: 'LENDER'
+};

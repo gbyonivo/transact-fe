@@ -3,7 +3,13 @@ import gql from 'graphql-tag';
 const ACCOUNTS_QUERY = gql`query AccountQuery {
   getAccounts {
    name,
-   _id
+   _id,
+   type,
+   summary{
+     interest,
+     paid,
+     borrowed
+   }
   }
 }`;
 
