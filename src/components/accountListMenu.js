@@ -18,19 +18,20 @@ const sortAccounts = (accounts) => {
 
 const graphqlOptions = { name: 'accounts' };
 
-const AccountListMenu = ({ accounts: { loading, getAccounts, error } }) => <div className={styles.accountListMenu}>
+const AccountListMenu = ({ accounts: { loading, getAccounts, error }, match }) => <div className={styles.accountListMenu}>
   <h4 className={styles.accountListMenuHeader}>Accounts</h4>
   {
     loading || error
       ? <Loading data={{ loading, error }} />
       : <ul className={styles.accountList}>{sortAccounts(getAccounts).map(account =>
-        <AccountListItem item={account} key={account.id || account.name} />)}
+        <AccountListItem item={account} key={account.id || account.name} selectedItem={match.params.id}/>)}
       </ul>
   }
 </div>;
 
 AccountListMenu.propTypes = {
-  accounts: PropTypes.object
+  accounts: PropTypes.object,
+  match: PropTypes.object
 };
 
 export default graphql(queries.ACCOUNTS_QUERY, graphqlOptions)(AccountListMenu);

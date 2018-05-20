@@ -9,6 +9,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import AccountListMenu from './components/accountListMenu';
 import Summary from './components/summary';
+import Account from './components/account';
 import './index.scss';
 
 const middlewareAuthLink = new ApolloLink((operation, forward) => {
@@ -37,8 +38,10 @@ const client = new ApolloClient({
 ReactDOM.render(<ApolloProvider client={client}>
   <Router>
     <div>
-      <Route path="/" component={AccountListMenu} />
-      <Route path="/" component={Summary} />
+      <Route path="/home" component={AccountListMenu}/>
+      <Route path="/home" component={Summary} exact={true}/>
+      <Route path="/account/:id" component={AccountListMenu} />
+      <Route path="/account/:id" component={Account} />
     </div>
   </Router>
 </ApolloProvider>, document.getElementById('index')); // eslint-disable-line
