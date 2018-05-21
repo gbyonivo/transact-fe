@@ -1,6 +1,7 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { queries } from '../queries';
 import Loading from './loading';
@@ -23,8 +24,10 @@ const AccountListMenu = ({ accounts: { loading, getAccounts, error }, match }) =
   {
     loading || error
       ? <Loading data={{ loading, error }} />
-      : <ul className={styles.accountList}>{sortAccounts(getAccounts).map(account =>
-        <AccountListItem item={account} key={account.id || account.name} selectedItem={match.params.id}/>)}
+      : <ul className={styles.accountList}>
+        <li><Link to="/account/new">New Account</Link></li>
+        {sortAccounts(getAccounts).map(account =>
+          <AccountListItem item={account} key={account.id || account.name} selectedItem={match.params.id} />)}
       </ul>
   }
 </div>;

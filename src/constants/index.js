@@ -48,3 +48,36 @@ export const TRANSACT_VIEWS = {
   PAYBACK: 'PAYBACK',
   BORROW: 'BORROW'
 };
+
+export const NOTICATION_TYPES = {
+  WARNING: 'warning',
+  SUCCESS: 'success',
+  ERROR: 'error',
+};
+
+export const NOTIFICATIONS = {
+  ERROR_DELETING: {
+    text: 'Error occured while trying to delete account',
+    type: NOTICATION_TYPES.ERROR
+  },
+  SUCCESS_DELETING: {
+    text: 'Account has been successfully deleted',
+    type: NOTICATION_TYPES.SUCCESS
+  },
+  ERROR_CREATING: {
+    text: 'Error occured while trying to create account',
+    type: NOTICATION_TYPES.ERROR
+  },
+  SUCCESS_CREATING: {
+    text: 'Account has been successfully created',
+    type: NOTICATION_TYPES.SUCCESS
+  },
+  ERROR_UPDATING: {
+    text: 'Error occured while trying to update account',
+    type: NOTICATION_TYPES.ERROR
+  },
+  SUCCESS_UPDATING: {
+    text: 'Account has been successfully updated',
+    type: NOTICATION_TYPES.SUCCESS
+  },
+};
