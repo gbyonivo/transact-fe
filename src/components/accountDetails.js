@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { graphql, compose } from 'react-apollo';
+import { connect } from 'react-redux';
+import { compose as reduxCompose } from 'redux';
 import { withRouter } from 'react-router-dom';
-import { ELEMENT_TYPES, ACCOUNT_TYPES, NIGERIAN_BANKS } from '../constants';
+
+import { ELEMENT_TYPES, ACCOUNT_TYPES, NIGERIAN_BANKS, NOTIFICATIONS } from '../constants';
 import TextInput from './elements/textInput';
 import SelectInput from './elements/selectInput';
 import Button from './elements/button';
 import { mutations, queries } from '../queries';
+import * as actions from '../actions';
 
 const accountProperties = {
   name: {
@@ -60,48 +64,48 @@ class AccountDetails extends Component {
     this.updateAccount = this.updateAccount.bind(this);
     this.createAccount = this.createAccount.bind(this);
     this.deleteAccount = this.deleteAccount.bind(this);
-    this.closeNotification = this.closeNotification.bind(this);
   }
   onChangeAccountDetails(value, name) {
     this.setState(() => ({ [name]: value }));
   }
-  closeNotification() {
-    this.setState(() => ({ notification: undefined }));
-  }
   createAccount() {
-    const { createAccount, history } = this.props;
+    const { createAccount, history, openNotification } = this.props;
     createAccount(getAccountFromState(this.state))
       .then(({ data: { createAccount: { _id } } }) => {
         history.push(`/account/${_id}`);
-        // this.setState(() => ({ notification: NOTIFICATIONS.SUCCESS_CREATING }));
+        openNotification(NOTIFICATIONS.SUCCESS_CREATING);
       })
       .catch((error) => {
         console.error('there was an error sending the query', error); //eslint-disable-line
-        // this.setState(() => ({ notification: NOTIFICATIONS.ERROR_CREATING }));
+        openNotification(NOTIFICATIONS.ERROR_CREATING);
       });
   }
   updateAccount() {
-    const { updateAccount, account: { _id }, history } = this.props;
+    const {
+      updateAccount, account: { _id }, history, openNotification
+    } = this.props;
     updateAccount({ ...getAccountFromState(this.state), _id })
       .then(() => {
         history.push(`/account/${_id}`);
-        // this.setState(() => ({ notification: NOTIFICATIONS.SUCCESS_UPDATING }));
+        openNotification(NOTIFICATIONS.SUCCESS_UPDATING);
       })
       .catch((error) => {
         console.error('there was an error sending the query', error); //eslint-disable-line
-        // this.setState(() => ({ notification: NOTIFICATIONS.ERROR_UPDATING }));
+        openNotification(NOTIFICATIONS.ERROR_UPDATING);
       });
   }
   deleteAccount() {
-    const { deleteAccount, account: { _id }, history } = this.props;
+    const {
+      deleteAccount, account: { _id }, history, openNotification
+    } = this.props;
     deleteAccount({ _id })
       .then(() => {
         history.push('/account/new');
-        // this.setState(() => ({ notification: NOTIFICATIONS.SUCCESS_DELETING }));
+        openNotification(NOTIFICATIONS.SUCCESS_DELETING);
       })
       .catch((error) => {
         console.error('there was an error sending the query', error); //eslint-disable-line
-        // this.setState(() => ({ notification: NOTIFICATIONS.ERROR_DELETING }));
+        openNotification(NOTIFICATIONS.ERROR_DELETING);
       });
   }
   render() {
@@ -154,10 +158,14 @@ AccountDetails.propTypes = {
   createAccount: PropTypes.func.isRequired,
   updateAccount: PropTypes.func.isRequired,
   deleteAccount: PropTypes.func.isRequired,
+  openNotification: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired
 };
 
-export default withRouter(compose(
+const mapStateToProps = () => ({});
+const mapActionsToProps = dispatch => ({ openNotification: reduxCompose(dispatch, actions.openNotification) });
+
+export default withRouter(connect(mapStateToProps, mapActionsToProps)(compose(
   graphql(mutations.ACCOUNT_CREATION_QUERY, {
     props: ({ mutate }) => ({
       createAccount: variables => mutate({
@@ -190,4 +198,4 @@ export default withRouter(compose(
       })
     })
   })
-)(AccountDetails));
+)(AccountDetails)));

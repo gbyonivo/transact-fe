@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 import PropTypes from 'prop-types';
+import * as actions from '../actions';
+import styles from './notification.scss';
 
 class Notification extends Component {
   constructor(props) {
@@ -8,25 +12,34 @@ class Notification extends Component {
       timeout: undefined
     };
   }
-  componentDidMount() {
-    const { closeNotification } = this.props;
-    this.state.timeout = setTimeout(closeNotification, 2000);
+  componentWillReceiveProps({ closeNotification, notification }) {
+    if (notification.type) {
+      this.state.timeout = setTimeout(closeNotification, 5000);
+    }
   }
   componentWillUnmount() {
     this.setState(() => ({ timeout: undefined }));
   }
   render() {
-    const { children, closeNotification } = this.props;
-    return (<div>
+    const { notification, closeNotification } = this.props;
+    return (<div className={styles.notification}>
       <div onClick={closeNotification}>close</div>
-      {children}
+      {notification.text || ''}
     </div>);
   }
 }
 
 Notification.propTypes = {
-  children: PropTypes.any.isRequired,
+  notification: PropTypes.any.isRequired,
   closeNotification: PropTypes.func.isRequired
 };
 
-export default Notification;
+const mapStateToProps = ({ notification: { notification } }) => ({
+  notification
+});
+
+const mapActionsToProps = dispatch => ({
+  closeNotification: compose(dispatch, actions.closeNotification)
+});
+
+export default connect(mapStateToProps, mapActionsToProps)(Notification);
