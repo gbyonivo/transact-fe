@@ -80,6 +80,14 @@ export const NOTIFICATIONS = {
     text: 'Account has been successfully updated',
     type: NOTICATION_TYPES.SUCCESS
   },
+  SUCCESS_TRANSACTING: {
+    text: 'Transaction successfully carried out',
+    type: NOTICATION_TYPES.SUCCESS
+  },
+  ERROR_TRANSACTING: {
+    text: 'Transaction failed. Please refresh page',
+    type: NOTICATION_TYPES.SUCCESS
+  }
 };
 
 export const ACTIONS = {

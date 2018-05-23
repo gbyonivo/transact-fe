@@ -1,4 +1,4 @@
-import { deleteAccountUpdate, createAccountUpdate } from './storeUpdates';
+import { deleteAccountUpdate, createAccountUpdate, paybackUpdate, borrowUpdate } from './storeUpdates';
 
 export const createAccountOptions = {
   props: ({ mutate }) => ({
@@ -20,6 +20,24 @@ export const deleteAccountOptions = {
     deleteAccount: variables => mutate({
       variables,
       update: deleteAccountUpdate
+    })
+  })
+};
+
+export const paybackOptions = {
+  props: ({ mutate }) => ({
+    payback: variables => mutate({
+      variables,
+      update: paybackUpdate
+    })
+  })
+};
+
+export const borrowOptions = {
+  props: ({ mutate }) => ({
+    borrow: variables => mutate({
+      variables,
+      update: borrowUpdate
     })
   })
 };

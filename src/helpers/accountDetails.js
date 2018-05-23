@@ -38,3 +38,4 @@ export const getAccountFromState = ({
 }) => ({
   name, bankName, bankAccountName, bankAccountNumber, type, regNumber, address
 });
+

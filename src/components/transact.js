@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { graphql, compose } from 'react-apollo';
+import { connect } from 'react-redux';
+import { compose as reduxCompose } from 'redux';
+
 import TransactTab from './transactTab';
+import { mutations, queries } from '../queries';
 import TransactTabForm from './transactTabForm';
-import { TRANSACT_VIEWS } from '../constants';
-import { transactBorrowProperties, transactPaybackProperties } from '../helpers/transact';
+import Loading from './loading';
+import { TRANSACT_VIEWS, NOTIFICATIONS } from '../constants';
+import * as actions from '../actions';
+import { transactBorrowProperties, transactPaybackProperties, getBorrowParamsFromState, getPaybackParamsFromState } from '../helpers/transact';
+import { borrowOptions, paybackOptions } from '../queries/options';
 
 class Transact extends Component {
   constructor(props) {
@@ -18,8 +26,8 @@ class Transact extends Component {
       view: TRANSACT_VIEWS.PAYBACK
     };
     this.selectView = this.selectView.bind(this);
-    // this.payback = this.payback.bind(this);
-    // this.borrow = this.borrow.bind(this);
+    this.payback = this.payback.bind(this);
+    this.borrow = this.borrow.bind(this);
     this.onChange = this.onChange.bind(this);
   }
   onChange(value, name) {
@@ -28,29 +36,79 @@ class Transact extends Component {
   selectView(view) {
     this.onChange('view', view);
   }
-  // payback() { }
-  // borrow() { }
+  payback() {
+    const { payback, account: { _id }, openNotification } = this.props;
+    payback({ ...getPaybackParamsFromState(this.state), _id })
+      .then(() => {
+        openNotification(NOTIFICATIONS.SUCCESS_TRANSACTING);
+      })
+      .catch((error) => {
+        console.error('there was an error sending the query', error); //eslint-disable-line
+        openNotification(NOTIFICATIONS.ERROR_TRANSACTING);
+      });
+  }
+  borrow() {
+    const { borrow, account: { _id }, openNotification } = this.props;
+    borrow({ ...getBorrowParamsFromState(this.state), _id })
+      .then(() => {
+        openNotification(NOTIFICATIONS.SUCCESS_TRANSACTING);
+      })
+      .catch((error) => {
+        console.error('there was an error sending the query', error); //eslint-disable-line
+        openNotification(NOTIFICATIONS.ERROR_TRANSACTING);
+      });
+  }
   render() {
     const { view } = this.state;
+    const { accounts: { loading, error, getAccounts }, account } = this.props;
     return (<div>
-      <TransactTab
-        selectView={() => this.selectView(TRANSACT_VIEWS.PAYBACK)}
-        headerText={'Pay Back'}
-        isActiveView={view === TRANSACT_VIEWS.PAYBACK}>
-        <TransactTabForm properties={transactPaybackProperties} onChange={this.onChange} state={this.state} />
-      </TransactTab>
-      <TransactTab
-        selectView={() => this.selectView(TRANSACT_VIEWS.BORROW)}
-        headerText={'Borrow'}
-        isActiveView={view === TRANSACT_VIEWS.BORROW}>
-        <TransactTabForm properties={transactBorrowProperties} onChange={this.onChange} state={this.state} />
-      </TransactTab>
+      {error || loading
+        ? <Loading />
+        : <div>
+          <TransactTab
+            selectView={() => this.selectView(TRANSACT_VIEWS.PAYBACK)}
+            headerText={'Pay Back'}
+            isActiveView={view === TRANSACT_VIEWS.PAYBACK}>
+            <TransactTabForm
+              properties={transactPaybackProperties}
+              onChange={this.onChange}
+              state={this.state}
+              onSubmit={this.payback}
+              accounts={getAccounts}
+              transactions={account.transactions}
+            />
+          </TransactTab>
+          <TransactTab
+            selectView={() => this.selectView(TRANSACT_VIEWS.BORROW)}
+            headerText={'Borrow'}
+            isActiveView={view === TRANSACT_VIEWS.BORROW}>
+            <TransactTabForm
+              properties={transactBorrowProperties}
+              onChange={this.onChange}
+              state={this.state}
+              onSubmit={this.borrow}
+              accounts={getAccounts}
+              transactions={account.transactions}
+            />
+          </TransactTab>
+        </div>}
     </div>);
   }
 }
 
 Transact.propTypes = {
-  account: PropTypes.object.isRequired
+  account: PropTypes.object.isRequired,
+  payback: PropTypes.func.isRequired,
+  borrow: PropTypes.func.isRequired,
+  openNotification: PropTypes.func.isRequired,
+  accounts: PropTypes.object.isRequired
 };
 
-export default Transact;
+const mapStateToProps = () => ({});
+const mapActionsToProps = dispatch => ({ openNotification: reduxCompose(dispatch, actions.openNotification) });
+
+export default connect(mapStateToProps, mapActionsToProps)(compose(
+  graphql(queries.ACCOUNTS_QUERY, { name: 'accounts' }),
+  graphql(mutations.PAYBACK_QUERY, paybackOptions),
+  graphql(mutations.BORROW_QUERY, borrowOptions)
+)(Transact));

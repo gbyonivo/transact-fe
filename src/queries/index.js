@@ -25,7 +25,7 @@ const ACCOUNTS_QUERY = gql`query accountQuery {
 const ACCOUNT_QUERY = gql`query accountQuery($id: String) {
   getAccount(id: $id) {
    ${ACCOUNT_FIELDS}
-   transactions{ date, amount, _id }
+   transactions{ date, amount, _id, sender, receiver }
   }
 }`;
 
@@ -48,7 +48,7 @@ const ACCOUNT_CREATION_QUERY = gql`mutation createAccountQuery(
     regNumber: $regNumber
   ){
     ${ACCOUNT_FIELDS}
-    transactions{ date, amount, _id }
+    transactions{ date, amount, _id, sender, receiver }
     summary{
       interest,
       paid,
@@ -78,7 +78,7 @@ const ACCOUNT_UPDATE_QUERY = gql`mutation updateAccountQuery(
     regNumber: $regNumber
   ){
    ${ACCOUNT_FIELDS}
-   transactions{ date, amount, _id }
+   transactions{ date, amount, _id, sender, receiver }
   }
 }`;
 
@@ -92,6 +92,47 @@ const ACCOUNT_DELETE_QUERY = gql`mutation deleteAccountQuery(
   }
 }`;
 
+const PAYBACK_QUERY = gql`mutation paybackQuery(
+  $_id: String,
+  $receiver: String,
+  $profitAccount: String,
+  $associatedTransaction: String,
+  $amount: Float,
+) {
+  payback (
+    _id: $_id,
+    receiver: $receiver,
+    profitAccount: $profitAccount,
+    associatedTransaction: $associatedTransaction,
+    amount: $amount,
+  ){
+    _id,
+   transactions{ date, amount, _id, sender, receiver },
+   summary{ interest, paid, borrowed },
+   alteredAccountsSummaries{ interest, paid, borrowed, _id }
+  }
+}`;
+
+const BORROW_QUERY = gql`mutation borrowQuery(
+  $_id: String,
+  $sender: String,
+  $amount: Float,
+  $rate: Float,
+  $rateIntervals: Int,
+) {
+  borrow (
+    _id: $_id,
+    sender: $sender,
+    amount: $amount,
+    rate: $rate,
+    rateIntervals: $rateIntervals,
+  ){
+    _id,
+   transactions{ date, amount, _id, sender, receiver },
+   summary{ interest, paid, borrowed },
+   alteredAccountsSummaries{ interest, paid, borrowed, _id }
+  }
+}`;
 
 export const queries = {
   ACCOUNTS_QUERY,
@@ -101,5 +142,7 @@ export const queries = {
 export const mutations = {
   ACCOUNT_CREATION_QUERY,
   ACCOUNT_UPDATE_QUERY,
-  ACCOUNT_DELETE_QUERY
+  ACCOUNT_DELETE_QUERY,
+  PAYBACK_QUERY,
+  BORROW_QUERY
 };
