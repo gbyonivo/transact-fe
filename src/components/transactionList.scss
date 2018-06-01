@@ -1,10 +1,13 @@
 .transactionListSection{
+  position: fixed;
+  width: calc(100% - 670px);
+  left: 670px; 
+  top: 0;
+  height: 100%;
+  overflow: auto;
   .transactionListHeader{
-    
-  }
-  .transactionList{
-    .transactionListItem{
-
-    }
+    text-align: center;
+    margin: 0;
+    font-size: 14px;
   }
 }

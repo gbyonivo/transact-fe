@@ -1,0 +1,12 @@
+.active{
+  display: block;
+  color: #000;
+  background-color: #fff;
+  padding: 0 0px 0 0;
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 38px);
+};
+.inactive{
+  display: none;
+}

@@ -19,4 +19,22 @@
     overflow: auto;
     height: calc(100% - 34px);
   }
+  .new{
+    background: #fff;
+    text-align: center;
+    padding: 10px 0;
+    margin: 5px 0;
+    box-shadow: 1.5px 1.5px 1.5px #000;
+    width: 100%;
+    a{
+      text-decoration: none;
+      width: 100%;
+      font-size: 13px;
+      font-weight: bold;
+      color: #16997f;
+      &:hover{
+        color: #10705d;
+      }
+    }
+  }
 }

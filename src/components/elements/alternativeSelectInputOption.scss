@@ -1,0 +1,11 @@
+.option{
+  font-size: 12px;
+  &.selected{
+    color: green;
+    font-weight: bolder;
+    &::before{
+      content: '\2714';
+    }
+  }
+  cursor: pointer;
+}

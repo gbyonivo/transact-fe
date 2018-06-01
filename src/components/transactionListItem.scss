@@ -1,0 +1,53 @@
+.transactionListItem{
+  transition: height ease 500ms;
+  margin: 15px;
+  &.isExpanded{
+    height: 100px;
+  }
+  &.isCollapsed{
+    height: 25px;
+    overflow: hidden;
+  }
+  .transactionListItemHeader{
+    height: 25px;
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+    .sender, .receiver, .amount{
+      float: left;
+      text-align: center;
+      padding-top: 2px;
+      min-width: 25%;
+    }
+    .amount{
+      &::before, &::after{
+        content: '\00BB';
+        margin: 0 5px;
+        font-size: 14px;
+        color: rgb(28, 84, 28);
+      }
+    }
+    .date{
+      height: 23px;
+      float: left;
+      padding-top: 2px;
+      color: #fff;
+      text-align: center;
+      min-width: 25%;
+    }
+    &.payIn {
+      background: rgba(51, 102, 204, 0.344);
+      .date{
+        background: #3366CC;
+      }
+    }
+    &.payOut {
+      background: rgba(28, 84, 28, 0.5);
+      .date{
+        background: rgb(28, 84, 28);
+      }
+    }
+  }
+}

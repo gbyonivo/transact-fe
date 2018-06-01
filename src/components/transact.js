@@ -12,6 +12,7 @@ import { TRANSACT_VIEWS, NOTIFICATIONS } from '../constants';
 import * as actions from '../actions';
 import { transactBorrowProperties, transactPaybackProperties, getBorrowParamsFromState, getPaybackParamsFromState } from '../helpers/transact';
 import { borrowOptions, paybackOptions } from '../queries/options';
+import styles from './transact.scss';
 
 class Transact extends Component {
   constructor(props) {
@@ -34,7 +35,7 @@ class Transact extends Component {
     this.setState(() => ({ [name]: value }));
   }
   selectView(view) {
-    this.onChange('view', view);
+    this.onChange(view, 'view');
   }
   payback() {
     const { payback, account: { _id }, openNotification } = this.props;
@@ -61,14 +62,24 @@ class Transact extends Component {
   render() {
     const { view } = this.state;
     const { accounts: { loading, error, getAccounts }, account } = this.props;
-    return (<div>
+    return (<div className={styles.transact}>
+      <h2>Transact</h2>
       {error || loading
         ? <Loading />
         : <div>
-          <TransactTab
-            selectView={() => this.selectView(TRANSACT_VIEWS.PAYBACK)}
-            headerText={'Pay Back'}
-            isActiveView={view === TRANSACT_VIEWS.PAYBACK}>
+          <div className={styles.transactTabSwitches}>
+            <div
+              onClick={() => this.selectView(TRANSACT_VIEWS.PAYBACK)}
+              className={`${styles.transactTabSwitch} ${view === TRANSACT_VIEWS.PAYBACK ? styles.selected : ''}`}>
+              Pay Back
+            </div>
+            <div
+              onClick={() => this.selectView(TRANSACT_VIEWS.BORROW)}
+              className={`${styles.transactTabSwitch} ${view === TRANSACT_VIEWS.BORROW ? styles.selected : ''}`}>
+              Borrow
+            </div>
+          </div>
+          <TransactTab isActiveView={view === TRANSACT_VIEWS.PAYBACK}>
             <TransactTabForm
               properties={transactPaybackProperties}
               onChange={this.onChange}
@@ -78,10 +89,7 @@ class Transact extends Component {
               transactions={account.transactions}
             />
           </TransactTab>
-          <TransactTab
-            selectView={() => this.selectView(TRANSACT_VIEWS.BORROW)}
-            headerText={'Borrow'}
-            isActiveView={view === TRANSACT_VIEWS.BORROW}>
+          <TransactTab isActiveView={view === TRANSACT_VIEWS.BORROW}>
             <TransactTabForm
               properties={transactBorrowProperties}
               onChange={this.onChange}

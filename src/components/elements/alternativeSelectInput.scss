@@ -1,0 +1,13 @@
+.alternativeSelectInput{
+  position: relative;
+  width: 318px;
+  margin: 10px 5px;
+  box-shadow: 0.5px 0.5px 0.5px #ccc;
+  .alternativeSelectInputLabel{
+    font-size: 10px;
+    margin-left: 5px;
+  }
+  .alternativeSelectInputOptions{
+    margin-left: 10px;
+  }
+}

@@ -1,8 +1,17 @@
 .numberInputWrapper{
+  margin: 10px 5px;
+  position: relative;
   .numberInputLabel{
-
+    font-size: 10px;
+    left: 5px;
+    position: absolute;
   }
-  .numberInput{
-    
+  input[type="number"].numberInput{
+    height: 30px;
+    min-width: 300px;
+    border: none;
+    padding-top: 10px;
+    padding-left: 15px;
+    box-shadow: 0.5px 0.5px 0.5px #ccc;
   }
 }

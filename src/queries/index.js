@@ -25,7 +25,7 @@ const ACCOUNTS_QUERY = gql`query accountQuery {
 const ACCOUNT_QUERY = gql`query accountQuery($id: String) {
   getAccount(id: $id) {
    ${ACCOUNT_FIELDS}
-   transactions{ date, amount, _id, sender, receiver }
+   transactions{ date, amount, _id, sender, receiver, interest, amountPaid }
   }
 }`;
 

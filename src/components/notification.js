@@ -22,8 +22,8 @@ class Notification extends Component {
   }
   render() {
     const { notification, closeNotification } = this.props;
-    return (<div className={styles.notification}>
-      <div onClick={closeNotification}>close</div>
+    return (<div className={`${styles.notification} ${notification.text ? styles.notificationOnScreen : styles.notificationOffScreen}`}>
+      <div onClick={closeNotification} className={styles.close}/>
       {notification.text || ''}
     </div>);
   }

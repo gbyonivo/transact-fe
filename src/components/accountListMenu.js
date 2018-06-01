@@ -25,7 +25,7 @@ const AccountListMenu = ({ accounts: { loading, getAccounts, error }, match }) =
     loading || error
       ? <Loading data={{ loading, error }} />
       : <ul className={styles.accountList}>
-        <li><Link to="/account/new">New Account</Link></li>
+        <li className={styles.new}><Link to="/account/new">New Account</Link></li>
         {sortAccounts(getAccounts).map(account =>
           <AccountListItem item={account} key={account.id || account.name} selectedItem={match.params.id} />)}
       </ul>

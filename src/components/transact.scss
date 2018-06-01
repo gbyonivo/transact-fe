@@ -1,0 +1,37 @@
+.transact{
+  position: fixed;
+  top: 55%;
+  width: 350px;
+  left: 300px;
+  height: 45%;
+  padding-left: 10px;
+  h2{
+    text-align: left;
+    margin: 0;
+    font-size: 14px;
+  }
+  .transactTabSwitches{
+    position: relative;
+    width: 100%;
+    height: 38px;
+    .transactTabSwitch{
+      width: 30%;
+      text-align: center;
+      color: #000;
+      background: #fff;
+      float: left;
+      cursor: pointer;
+      height: 30px;
+      padding-top: 8px;
+      font-size: 12px;
+      transition: width ease-out 0.5s;
+      &.selected{
+        color: #fff;
+        background: #10705d;
+        width: 70%;
+        font-size: 14px;
+        transition: width ease-out 0.5s;
+      }
+    }
+  }
+}

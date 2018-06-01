@@ -30,7 +30,7 @@ const Account = ({
       : <div>
         <AccountDetails account={getAccount} />
         { id !== CREATE_MODE_ID ? <Transact account={getAccount} /> : null }
-        { id !== CREATE_MODE_ID ? <TransactionList transactions={getAccount.transactions} /> : null }
+        { id !== CREATE_MODE_ID ? <TransactionList transactions={getAccount.transactions} accountId={getAccount._id}/> : null }
       </div>
   }
 </div>;

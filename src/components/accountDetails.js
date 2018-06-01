@@ -13,6 +13,7 @@ import { mutations } from '../queries';
 import * as actions from '../actions';
 import { deleteAccountOptions, updateAccountOptions, createAccountOptions } from '../queries/options';
 import { getAccountFromState, accountProperties } from '../helpers/accountDetails';
+import styles from './accountDetails.scss';
 
 class AccountDetails extends Component {
   constructor(props) {
@@ -72,27 +73,29 @@ class AccountDetails extends Component {
       });
   }
   render() {
-    return (<div>
+    return (<div className={`${styles.accountDetails} ${this.props.account._id ? styles.editMode : styles.createMode}`}>
       <h2>{this.props.account._id ? 'Edit Account' : 'Create Account'}</h2>
-      {Object.keys(accountProperties).map(key =>
-        accountProperties[key].type === ELEMENT_TYPES.TEXT_INPUT
-          ? <TextInput
-            defaultValue={this.state[key] || ''}
-            onChange={this.onChangeAccountDetails}
-            name={key}
-            key={key}
-            label={accountProperties[key].label}
-            placeholder={accountProperties[key].label}
-          />
-          : <SelectInput
-            value={this.state[key] || ''}
-            onChange={this.onChangeAccountDetails}
-            name={key}
-            key={key}
-            label={accountProperties[key].label}
-            placeholder={accountProperties[key].label}
-            options={accountProperties[key].options}
-          />)}
+      <div className={styles.accountDetailsBody}>
+        {Object.keys(accountProperties).map(key =>
+          accountProperties[key].type === ELEMENT_TYPES.TEXT_INPUT
+            ? <TextInput
+              defaultValue={this.state[key] || ''}
+              onChange={this.onChangeAccountDetails}
+              name={key}
+              key={key}
+              label={accountProperties[key].label}
+              placeholder={accountProperties[key].label}
+            />
+            : <SelectInput
+              value={this.state[key] || ''}
+              onChange={this.onChangeAccountDetails}
+              name={key}
+              key={key}
+              label={accountProperties[key].label}
+              placeholder={accountProperties[key].label}
+              options={accountProperties[key].options}
+            />)}
+      </div>
       <Button
         value={this.props.account._id ? 'update' : 'create'}
         onClick={this.props.account._id ? this.updateAccount : this.createAccount}

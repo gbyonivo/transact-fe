@@ -1,18 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import AlternativeSelectInput from './alternativeSelectInput';
 
 import styles from './selectInput.scss';
 
 const SelectInput = ({
   label, options, onChange, name, value
 }) =>
-  <div className={styles.selectInputWrapper}>
-    <label className={styles.selectInputLabel}>{label}</label>
-    <select value={value} onChange={e => onChange(e.target.value, name)} name={name} className={styles.selectInput}>
-      {options.map(option =>
-        <option key={option.value} value={option.value}>{option.text}</option>)}
-    </select>
-  </div>;
+  options.length < 5
+    ? <AlternativeSelectInput {...{
+      label, options, name, value, onChange
+    }} />
+    : <div className={styles.selectInputWrapper}>
+      <label className={styles.selectInputLabel}>{label}</label>
+      <select value={value} onChange={e => onChange(e.target.value, name)} name={name} className={styles.selectInput}>
+        {options.map(option =>
+          <option key={option.value} value={option.value}>{option.text}</option>)}
+      </select>
+    </div>;
 
 SelectInput.propTypes = {
   label: PropTypes.string.isRequired,

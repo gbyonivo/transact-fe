@@ -1,6 +1,30 @@
 .notification{
   position: fixed;
   right: 0;
-  background: red;
+  background: #fff;
+  box-shadow: 0.5px 0.5px 0.5px #ccc;
   top: 0;
+  width: 250px;
+  height: 65px;
+  z-index: 4;
+  font-size: 12px;
+  font-weight: bold;
+  transition: right ease 0.5s;
+  padding: 8px;
+  &.notificationOnScreen{
+    right: 0;
+  }
+  &.notificationOffScreen{
+    right: -270px;
+  }
+  .close{
+    position: absolute;
+    right: 4px;
+    top: 2px;
+    color: red;
+    cursor: pointer;
+    &::after{
+      content: '\2573';
+    }
+  }
 }

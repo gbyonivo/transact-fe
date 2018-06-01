@@ -1,4 +1,5 @@
 import { ELEMENT_TYPES, ACCOUNT_TYPES } from '../constants';
+import { handleRandomDateFormats } from '../functions';
 
 export const transactPaybackProperties = {
   paybackAmount: {
@@ -19,7 +20,7 @@ export const transactPaybackProperties = {
     getOptions: (accounts, transactions) => [{ text: '', value: '' }]
       .concat((transactions || [])
         .filter(transaction => transaction.status !== 'PAID' && transaction.sender)
-        .map(transaction => ({ text: transaction.date, value: transaction._id })))
+        .map(transaction => ({ text: handleRandomDateFormats(transaction.date, 'YYYY-MM-DD HH:mm'), value: transaction._id })))
   },
   receiver: {
     label: 'Paying Into',
