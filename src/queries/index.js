@@ -22,8 +22,8 @@ const ACCOUNTS_QUERY = gql`query accountQuery {
   }
 }`;
 
-const ACCOUNT_QUERY = gql`query accountQuery($id: String) {
-  getAccount(id: $id) {
+const ACCOUNT_QUERY = gql`query accountQuery($_id: String) {
+  getAccount(_id: $_id) {
    ${ACCOUNT_FIELDS}
    transactions{ date, amount, _id, sender, receiver, interest, amountPaid }
   }
@@ -94,22 +94,18 @@ const ACCOUNT_DELETE_QUERY = gql`mutation deleteAccountQuery(
 
 const PAYBACK_QUERY = gql`mutation paybackQuery(
   $_id: String,
-  $receiver: String,
-  $profitAccount: String,
+  $receivingAccounts: [ReceivingAccountInput],
   $associatedTransaction: String,
-  $amount: Float,
 ) {
   payback (
     _id: $_id,
-    receiver: $receiver,
-    profitAccount: $profitAccount,
+    receivingAccounts: $receivingAccounts,
     associatedTransaction: $associatedTransaction,
-    amount: $amount,
   ){
-    _id,
-   transactions{ date, amount, _id, sender, receiver },
-   summary{ interest, paid, borrowed },
-   alteredAccountsSummaries{ interest, paid, borrowed, _id }
+    _id
+    summary{ interest, paid, borrowed }
+    transactions{ date, amount, _id, sender, receiver, interest, amountPaid },
+    alteredAccountsSummaries{ interest, paid, borrowed, _id }
   }
 }`;
 
@@ -128,9 +124,9 @@ const BORROW_QUERY = gql`mutation borrowQuery(
     rateIntervals: $rateIntervals,
   ){
     _id,
-   transactions{ date, amount, _id, sender, receiver },
-   summary{ interest, paid, borrowed },
-   alteredAccountsSummaries{ interest, paid, borrowed, _id }
+    transactions{ date, amount, _id, sender, receiver, interest, amountPaid },
+    summary{ interest, paid, borrowed },
+    alteredAccountsSummaries{ interest, paid, borrowed, _id }
   }
 }`;
 

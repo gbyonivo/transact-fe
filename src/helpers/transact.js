@@ -2,17 +2,13 @@ import { ELEMENT_TYPES, ACCOUNT_TYPES } from '../constants';
 import { handleRandomDateFormats } from '../functions';
 
 export const transactPaybackProperties = {
-  paybackAmount: {
-    label: 'Payback Amount',
-    type: ELEMENT_TYPES.NUMBER_INPUT
-  },
-  profitAccount: {
-    label: 'Profit Account',
-    type: ELEMENT_TYPES.SELECT_INPUT,
-    getOptions: accounts => [{ text: '', value: '' }]
+  receivingAccounts: {
+    label: 'Paying Into Accounts',
+    type: ELEMENT_TYPES.CHECK_AND_FILL_INPUT,
+    getOptions: accounts => [{ text: '', value: '', inputValue: 0 }]
       .concat((accounts || [])
-        .filter(account => account.type === ACCOUNT_TYPES.PROFIT)
-        .map(account => ({ text: account.name, value: account._id })))
+        .filter(account => account.type !== ACCOUNT_TYPES.BORROWER)
+        .map(account => ({ text: account.name, value: account._id, inputValue: 1 })))
   },
   associatedTransaction: {
     label: 'Transaction in Reference',
@@ -20,15 +16,10 @@ export const transactPaybackProperties = {
     getOptions: (accounts, transactions) => [{ text: '', value: '' }]
       .concat((transactions || [])
         .filter(transaction => transaction.status !== 'PAID' && transaction.sender)
-        .map(transaction => ({ text: handleRandomDateFormats(transaction.date, 'YYYY-MM-DD HH:mm'), value: transaction._id })))
-  },
-  receiver: {
-    label: 'Paying Into',
-    type: ELEMENT_TYPES.SELECT_INPUT,
-    getOptions: accounts => [{ text: '', value: '' }]
-      .concat((accounts || [])
-        .filter(account => account.type === ACCOUNT_TYPES.LENDER)
-        .map(account => ({ text: account.name, value: account._id })))
+        .map(transaction => ({
+          text: `${handleRandomDateFormats(transaction.date, 'YYYY-MM-DD HH:mm')} - ${transaction.amountPaid}`,
+          value: transaction._id
+        })))
   }
 };
 
@@ -62,7 +53,8 @@ export const getBorrowParamsFromState = ({
 });
 
 export const getPaybackParamsFromState = ({
-  profitAccount, receiver, paybackAmount, associatedTransaction
+  associatedTransaction, receivingAccounts
 }) => ({
-  receiver, profitAccount, associatedTransaction, amount: paybackAmount
+  associatedTransaction,
+  receivingAccounts: receivingAccounts.map(({ value, inputValue }) => ({ accountId: value, amount: inputValue }))
 });

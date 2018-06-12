@@ -1,0 +1,15 @@
+.checkAndFillInput{
+  position: relative;
+  width: 318px;
+  margin: 10px 5px;
+  box-shadow: 0.5px 0.5px 0.5px #ccc;
+  height: 100px;
+  overflow: auto;
+  .checkAndFillInputLabel{
+    font-size: 10px;
+    margin-left: 5px;
+  }
+  .checkAndFillInputOptions{
+    margin: 0 10px;
+  }
+}

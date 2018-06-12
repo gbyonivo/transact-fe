@@ -16,24 +16,25 @@ const graphqlOptions = {
   skip: ownProps => ownProps.match.params.id === CREATE_MODE_ID,
   options: ownProps => ({
     variables: {
-      id: ownProps.match.params.id
+      _id: ownProps.match.params.id
     }
   })
 };
 
 const Account = ({
   account: { loading, error, getAccount }, match: { params: { id } }
-}) => <div className={styles.account}>
-  {
-    loading || error
-      ? <Loading data={{ loading, error }} />
-      : <div>
-        <AccountDetails account={getAccount} />
-        { id !== CREATE_MODE_ID ? <Transact account={getAccount} /> : null }
-        { id !== CREATE_MODE_ID ? <TransactionList transactions={getAccount.transactions} accountId={getAccount._id}/> : null }
-      </div>
-  }
-</div>;
+}) =>
+  <div className={styles.account}>
+    {
+      loading || error
+        ? <Loading data={{ loading, error }} />
+        : <div>
+          <AccountDetails account={getAccount} />
+          {id !== CREATE_MODE_ID ? <Transact account={getAccount} /> : null}
+          {id !== CREATE_MODE_ID ? <TransactionList transactions={getAccount.transactions} accountId={getAccount._id} /> : null}
+        </div>
+    }
+  </div>;
 
 Account.defaultProps = {
   account: {

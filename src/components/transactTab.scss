@@ -5,8 +5,12 @@
   padding: 0 0px 0 0;
   position: absolute;
   width: 100%;
-  height: calc(100% - 38px);
+  height: calc(100% - 60px);
+  overflow: auto;
+  transition:  width ease 0.5s;
 };
 .inactive{
   display: none;
+  width: 0;
+  transition:  width ease 0.5s;
 }

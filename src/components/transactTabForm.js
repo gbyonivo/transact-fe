@@ -4,6 +4,7 @@ import { ELEMENT_TYPES } from '../constants';
 import TextInput from './elements/textInput';
 import SelectInput from './elements/selectInput';
 import NumberInput from './elements/numberInput';
+import CheckAndFillInput from './elements/checkAndFillInput';
 import Button from './elements/button';
 
 const PickForm = ({
@@ -32,6 +33,14 @@ const PickForm = ({
       defaultValue={parseFloat(state[propertyName] || 0, 10)}
       label={properties[propertyName].label}
       placeholder={properties[propertyName].label}
+      name={propertyName}
+      onChange={onChange}
+    />;
+  case ELEMENT_TYPES.CHECK_AND_FILL_INPUT:
+    return <CheckAndFillInput
+      selectedOptions={state[propertyName] || []}
+      options={properties[propertyName].getOptions(accounts, transactions)}
+      label={properties[propertyName].label}
       name={propertyName}
       onChange={onChange}
     />;

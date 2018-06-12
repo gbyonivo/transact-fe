@@ -1,0 +1,33 @@
+.checkAndFillInputOption{
+  position: relative;
+  height: 25px;
+  font-size: 12px;
+  width: 100%;
+  margin-bottom: 4px;
+  padding-top: 5px;
+  cursor: pointer;
+  &.isSelected{
+    background: rgba(0, 128, 0, 0.268);
+  }
+  &.isNotSelected{
+
+  }
+  .checkAndFillInputOptionText{
+    width: calc(100% - 65px);
+    left: 0;
+    padding-left: 5px; 
+  }
+  .checkAndFillInputOptionNumberbox{
+    width: 50px;
+    right: 10px;
+    input{
+      width: 50px;
+      border: none;
+      box-shadow: 0.5px 0.5px 0.5px #ccc;
+      height: 18px;
+    }
+  }
+  .checkAndFillInputOptionText, .checkAndFillInputOptionNumberbox{
+    position: absolute;
+  }
+}

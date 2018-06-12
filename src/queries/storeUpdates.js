@@ -18,7 +18,8 @@ export const createAccountUpdate = (proxy, { data: { createAccount } }) => {
 const updateSummaryAfterTransaction = (proxy, {
   _id,
   summary,
-  alteredAccountsSummaries
+  alteredAccountsSummaries,
+  transactions
 }) => {
   const query = { query: queries.ACCOUNTS_QUERY };
   const data = proxy.readQuery(query);
@@ -36,6 +37,11 @@ const updateSummaryAfterTransaction = (proxy, {
       ...alteredAccountsWithUpdatedSummaries
     ]);
   proxy.writeQuery({ ...query, data });
+
+  const accountQuery = { query: queries.ACCOUNT_QUERY, variables: { _id } };
+  const accountData = proxy.readQuery(accountQuery);
+  accountData.getAccount.transactions = transactions;
+  proxy.writeQuery({ ...accountQuery, data: accountData });
 };
 
 export const paybackUpdate = (proxy, { data: { payback } }) => {
